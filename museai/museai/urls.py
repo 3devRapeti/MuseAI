@@ -17,11 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from generator.views import home
+from generator import views
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', views.generate_content, name='home'), 
     path('admin/', admin.site.urls),
-    path('generator/', include('generator.urls')),
+    path('generate/', include('generator.urls')), 
 ]
+
 

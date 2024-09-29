@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        .container {
+            margin-top: 50px;
+            max-width: 600px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>MuseAi</h1>
+    </div>
+    <div class="result">
+        <h2>Generated Lyrics</h2>
+        <p id="lyrics">...</p>
+
+        <h2>Generated Chords</h2>
+        <p id="chords">...</p>
+    </div>
+    <div class="text-center" style="margin-top: 20px;">
+        <form method="POST" action="{% url 'generate_content' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-custom">Generate</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
