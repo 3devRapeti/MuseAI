@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import random
 import sys
+from .forms import KeywordForm
 
 sys.path.append(".")
 
@@ -20,9 +21,21 @@ def generate_chords():
 
 def generate_content(request):
 
-    keyWords = ["rain", "love"]
+    lyrics = ""
 
-    lyrics = generate_lyrics(keyWords)
+    if request.method == "POST":
+
+        form = KeywordForm(request.POST)
+
+        if form.is_valid():
+
+            keyword = form.cleaned_data["Keyword"]
+
+            lyrics = generate_lyrics(keyword)
+        else:
+            print(form.errors)
+    else:
+        form = KeywordForm()
 
     chords = generate_chords()
 
