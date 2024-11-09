@@ -1,9 +1,9 @@
 import openai
 
 # set OpenAI API key
-openai.api_key = "sk-z..."
+openai.api_key = "sk-p..."
 
-def generate_lyrics(keywords):
+def generate_lyrics_model(keywords):
     prompt = f"{', '.join(keywords)}"
 
     response = openai.ChatCompletion.create(
@@ -19,5 +19,5 @@ def generate_lyrics(keywords):
     return response['choices'][0]['message']['content']
 
 keywords = ["rain", "night", "alone"]
-lyrics = generate_lyrics(keywords)
+lyrics = generate_lyrics_model(keywords)
 print(lyrics)
