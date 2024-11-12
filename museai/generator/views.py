@@ -1,19 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import random
+import sys
+from .forms import KeywordForm
 
-def generate_lyrics():
-    lines = [
-        "चाँदनी रात में, तेरे ख्वाबों में खोया",
-        "तेरे बिना अधूरा, मेरा हर सपना",
-        "तू है तो सब कुछ है, तू नहीं तो कुछ नहीं",
-        "तेरी यादों में बसा, मेरा हर मौसम",
-        "पलकों पर रखा मैंने तेरा नाम",
-        "दिल की धड़कन में बसी है ये ख़ामोशी",
-        "तेरे संग जिया मेरा, हर पल जैसे एक ख़्वाब",
-        "तेरा साथ मिले तो, हर मुश्किल है आसान"
-    ]
-    return "\n".join(random.sample(lines, 3))
+sys.path.append(".")
+
+from generator_call_OpenAI.generator import generate_lyrics_model
+
+def generate_lyrics(keyWords):
+
+    lyrics = generate_lyrics_model(keyWords)
+
+    return lyrics
 
 def generate_chords():
     chords = ["C", "G", "Am", "F", "Em", "D", "A", "E"]
@@ -21,7 +20,23 @@ def generate_chords():
     return f"Chord Progression: {progression}"
 
 def generate_content(request):
-    lyrics = generate_lyrics()
+
+    lyrics = ""
+
+    if request.method == "POST":
+
+        form = KeywordForm(request.POST)
+
+        if form.is_valid():
+
+            keyword = form.cleaned_data["Keyword"]
+
+            lyrics = generate_lyrics(keyword)
+        else:
+            print(form.errors)
+    else:
+        form = KeywordForm()
+
     chords = generate_chords()
 
     context = {

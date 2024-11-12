@@ -39,10 +39,17 @@
 <div class="container">
     <div class="header">
         <h1>MuseAi</h1>
+
+        <h2>Key Words</h2>
+        <form method="post">
+            {% csrf_token %}
+            <p><input type="text" name="Keyword"></p>
+            <button type="submit">Submit</button>
+        </form>
     </div>
     <div class="result">
         <h2>Generated Lyrics</h2>
-        <p id="lyrics">...</p>
+        <p id="lyrics">{{lyrics}}</p>
 
         <h2>Generated Chords</h2>
         <p id="chords">...</p>
