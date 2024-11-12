@@ -28,5 +28,4 @@ def generate_content(request):
         "lyrics": lyrics,
         "chords": chords
     }
-
     return render(request, 'generate.html', context)

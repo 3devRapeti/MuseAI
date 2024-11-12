@@ -42,10 +42,10 @@
     </div>
     <div class="result">
         <h2>Generated Lyrics</h2>
-        <p id="lyrics">...</p>
+        <p id="lyrics">{{ lyrics }}</p>
 
         <h2>Generated Chords</h2>
-        <p id="chords">...</p>
+        <p id="chords">{{ chords }}</p>
     </div>
     <div class="text-center" style="margin-top: 20px;">
         <form method="POST" action="{% url 'generate_content' %}">
