@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAI - Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+    <!-- loading Spinner -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- sidebar -->
+        <div class="sidebar">
+            <h2>MuseAI</h2>
+            <ul>
+                <li><a href="dashboard.html" onclick="showLoading()">Dashboard</a></li>
+                <li><a href="generate-lyrics.html" onclick="showLoading()">Generate Lyrics</a></li>
+                <li><a href="createchords.html" onclick="showLoading()">Create Chords</a></li>
+                <li><a href="savedprojects.html" onclick="showLoading()">Saved Projects</a></li>
+                <li><a href="userpage.html" onclick="showLoading()">User Profile</a></li>
+                <li><a href="editprofile.html" onclick="showLoading()">Edit Profile</a></li>
+                <li><a href="settings.html" onclick="showLoading()">Settings</a></li>
+                <li><a href="logout.html" onclick="showLoading()">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- main Content -->
+        <div class="main-content">
+            <header>
+                <h1>Welcome, User!</h1>
+                <div class="actions">
+                    <button class="btn-create" onclick="showLoading()">New Project</button>
+                </div>
+            </header>
+
+            <div class="projects">
+                <h2>Your Projects</h2>
+                <div class="project-item">
+                    <h3>Song 1</h3>
+                    <p>AI-generated lyrics and chords</p>
+                    <a href="#" onclick="showLoading()">Edit</a>
+                </div>
+                <div class="project-item">
+                    <h3>Song 2</h3>
+                    <p>AI-generated lyrics and chords</p>
+                    <a href="#" onclick="showLoading()">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>

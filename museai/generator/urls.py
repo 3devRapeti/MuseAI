@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from .views import generate_content, land, login, signup
 
 urlpatterns = [
-    path('', views.generate_content, name='generate_content'),
+    path('', land, name='land'),
+    path('login',login, name="login"),
+    path('signup', signup, name="signup")
 ]

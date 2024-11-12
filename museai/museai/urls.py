@@ -20,9 +20,9 @@ from django.urls import path, include
 from generator import views
 
 urlpatterns = [
-    path('', views.generate_content, name='home'), 
+    path('generate/', views.generate_content, name='home'), 
     path('admin/', admin.site.urls),
-    path('generate/', include('generator.urls')), 
+    path('', include('generator.urls')), 
 ]
 
 
