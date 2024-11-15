@@ -1,7 +1,7 @@
 import openai
 
 # set OpenAI API key
-openai.api_key = "sk-p..."
+openai.api_key = ""
 
 def generate_lyrics_model(keywords):
     prompt = f"{', '.join(keywords)}"
