@@ -17,10 +17,8 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from generator import views
 
 urlpatterns = [
-    path('generate/', views.generate_content, name='home'), 
     path('admin/', admin.site.urls),
     path('', include('generator.urls')), 
 ]

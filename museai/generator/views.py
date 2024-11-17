@@ -52,3 +52,12 @@ def login(request) :
 
 def signup(request) :
     return render(request, 'signuppage.html')
+
+def lyrics(request):
+    return render(request,'generate.html')
+
+def chord(request):
+    return render(request,'generate.html')
+
+def genre(request):
+    return render(request,'generate.html')
