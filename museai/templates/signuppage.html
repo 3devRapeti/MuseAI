@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAI - Sign Up / Login</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-forms">
+            <!-- Signup Form -->
+            <div id="signupForm" class="form active">
+                <h2>Sign Up</h2>
+                <form action="/signup" method="POST" onsubmit="showLoading()">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Sign Up</button>
+                    <p>Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
+                </form>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="form">
+                <h2>Login</h2>
+                <form action="/login" method="POST" onsubmit="showLoading()">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn-auth">Login</button>
+                    <p>Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForms() {
+            document.getElementById('signupForm').classList.toggle('active');
+            document.getElementById('loginForm').classList.toggle('active');
+        }
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

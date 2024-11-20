@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MuseAI - Create Chords</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="navbar">
+        <h1>Create Chords</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Home</a></li>
+                <li><a href="createchords.html">Create Chords</a></li>
+                <li><a href="editprofile.html">Edit Profile</a></li>
+                <li><a href="savedprojects.html">Saved Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="create-chords-container">
+        <form action="/create-chords" method="POST" onsubmit="showLoading()">
+            <div class="input-group">
+                <label for="key">Key</label>
+                <select id="key" name="key" required>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="E">E</option>
+                    <!-- Add other keys as needed -->
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="scale">Scale</label>
+                <select id="scale" name="scale" required>
+                    <option value="Major">Major</option>
+                    <option value="Minor">Minor</option>
+                    <!-- Add other scales as needed -->
+                </select>
+            </div>
+            <button type="submit" class="btn-create">Generate Chords</button>
+        </form>
+
+        <section id="chord-output">
+            <h2>Generated Chords</h2>
+            <p>No chords generated yet.</p>
+        </section>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

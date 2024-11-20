@@ -9,7 +9,6 @@ sys.path.append(".")
 from lyrics_generator.generator_OpenAI import generate_lyrics_model
 
 def generate_lyrics(keyWords):
-
     lyrics = generate_lyrics_model(keyWords)
 
     return lyrics
@@ -43,5 +42,22 @@ def generate_content(request):
         "lyrics": lyrics,
         "chords": chords
     }
-
     return render(request, 'generate.html', context)
+
+def land(request) :
+    return render(request, 'landingpage.html')
+
+def login(request) :
+    return render(request,'loginpage.html')
+
+def signup(request) :
+    return render(request, 'signuppage.html')
+
+def lyrics(request):
+    return render(request,'generate.html')
+
+def chord(request):
+    return render(request,'generate.html')
+
+def genre(request):
+    return render(request,'generate.html')
