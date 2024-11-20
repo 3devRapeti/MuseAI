@@ -6,7 +6,7 @@ from .forms import KeywordForm
 
 sys.path.append(".")
 
-from lyrics_generator.generator_OpenAI import generate_lyrics_model
+from lyrics_generator.generator_gpt2 import generate_lyrics_model
 
 def generate_lyrics(keyWords):
     lyrics = generate_lyrics_model(keyWords)
