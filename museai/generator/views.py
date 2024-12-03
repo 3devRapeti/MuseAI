@@ -1,23 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import JsonResponse
 import random
 import sys
+import json
 from .forms import KeywordForm
 
 sys.path.append(".")
 
-from lyrics_generator.generator_OpenAI import generate_lyrics_model
+from lyrics_generator.generator_gpt2 import generate_lyrics_model as model_gpt2
+from lyrics_generator.generator_OpenAI import generate_lyrics_model as model_openai
 
-def generate_lyrics(keyWords):
-
-    lyrics = generate_lyrics_model(keyWords)
-
+def generate_lyrics(keyWords, model):
+    lyrics = ""
+    if model == "basic":
+        lyrics = model_gpt2(keyWords)
+    elif model == "premium":
+        lyrics = model_openai(keyWords)
+    
     return lyrics
-
-def generate_chords():
-    chords = ["C", "G", "Am", "F", "Em", "D", "A", "E"]
-    progression = " - ".join(random.sample(chords, 4))
-    return f"Chord Progression: {progression}"
 
 def generate_content(request):
 
@@ -25,23 +25,30 @@ def generate_content(request):
 
     if request.method == "POST":
 
-        form = KeywordForm(request.POST)
+        form = KeywordForm(json.loads(request.body))
+        print(form.is_valid())
 
         if form.is_valid():
 
-            keyword = form.cleaned_data["Keyword"]
+            print(form.cleaned_data)
 
-            lyrics = generate_lyrics(keyword)
+            keyword = form.cleaned_data["Keyword"]
+            print(keyword)
+            model = form.cleaned_data["Model"]
+            print(model)
+
+            lyrics = generate_lyrics(keyword, model)
+
+            return JsonResponse({"lyrics": lyrics})
+        
         else:
             print(form.errors)
     else:
         form = KeywordForm()
 
-    chords = generate_chords()
 
     context = {
         "lyrics": lyrics,
-        "chords": chords
     }
 
     return render(request, 'generate.html', context)

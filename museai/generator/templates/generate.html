@@ -1,66 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuseAi</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Lyrics Generator</title>
+
     <style>
-        body {
-            background-color: #f8f9fa;
-            color: #343a40;
-        }
-        .container {
-            margin-top: 50px;
-            max-width: 600px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .result {
-            background-color: #ffffff;
-            padding: 20px;
+        .dynamic-textarea {
+            width: 80%; 
+            max-height: 200px;
+            padding: 5px;
+            font-size: 16px;
+            line-height: 1.5;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+            resize: none; 
+            overflow-wrap: break-word; 
+            overflow-y: auto; 
         }
-        .btn-custom {
-            background-color: #007bff;
+
+        .add-button {
+            position: relative;
+            right: 35px; 
+            bottom: 0px;
+            transform: translatey(-50%);
+            width: 25px;
+            height: 25px;
+            padding: -20px;
+            font-size: 20px;
+            font-weight:bold;
             color: white;
+            background-color: #8eb2cf;
+            border: none;
+            border-radius: 10%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
         }
-        .btn-custom:hover {
-            background-color: #0056b3;
+
+        .output-container {
+            width: 80%;
+            max-width: 800px;
+            min-width: 300px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 5px;
+            /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+
+        .output-item {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 10px 15px;
+            background-color: white;
+            color: black;
+            font-size: 14px;
+            border-radius: 15px;
+            word-wrap: break-word;
+            cursor: default;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .delete-button {
+            margin-left: 10px;
+            background-color: #ff4d4d;
             color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .generate-button {
+            margin-left: 10px;
+            background-color: #8eb2cf;
+            color: white;
+            border: none;
+            border-radius: 5%;
+            width: 100px;
+            height: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .lyricsContent {
+            font-family: 'Arial', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
+
 <body>
+ 
+    <h1>Lyrics Generator</h1>
 
-<div class="container">
-    <div class="header">
-        <h1>MuseAi</h1>
+    <div class="dynamic-container">
+        <h2>Input your Key Words here</h2>
+        <textarea class="dynamic-textarea" placeholder="Input your key words here..."></textarea>
+        <button class="add-button">+</button>
+    </div>
 
-        <h2>Key Words</h2>
-        <form method="post">
-            {% csrf_token %}
-            <p><input type="text" name="Keyword"></p>
-            <button type="submit">Submit</button>
-        </form>
+    <div class="output-container" id="outputContainer">
+        <!-- Updated keywords will be added here -->
     </div>
-    <div class="result">
-        <h2>Generated Lyrics</h2>
-        <p id="lyrics">{{lyrics}}</p>
 
-        <h2>Generated Chords</h2>
-        <p id="chords">...</p>
-    </div>
-    <div class="text-center" style="margin-top: 20px;">
-        <form method="POST" action="{% url 'generate_content' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-custom">Generate</button>
-        </form>
-    </div>
-</div>
+    <button id="generateButton" class="generate-button">Generate</button>
+    <button id="clearButton" class="generate-button">Clear</button>
+    <button id="exportButton" class="generate-button">Export</button>
+
+    <select id="modelSelect">
+        <option value="basic">Normal</option>
+        <option value="premium">Upgraded</option>
+    </select>
+
+    <div id="lyricsContent"></div>
+
+    <script>
+        const textarea = document.querySelector('.dynamic-textarea');
+        const addbutton = document.querySelector('.add-button');
+
+        const outputContainer = document.getElementById('outputContainer');
+
+        const generatebutton = document.querySelector('.generate-button');
+        const clearbutton = document.getElementById('clearButton');
+        const exportButton = document.getElementById('exportButton');
+        const lyricsContent = document.getElementById('lyricsContent');
+        
+        const keywords = [];
+
+        textarea.addEventListener('input', () => {
+            textarea.style.height = 'auto'; 
+            textarea.style.height = `${textarea.scrollHeight}px`; 
+        });
+
+        addbutton.addEventListener('click', () => {
+            const text = textarea.value.trim();
+            if (text) {
+
+                keywords.push(text);
+
+                const outputItem = document.createElement('div');
+                outputItem.className = 'output-item';
+
+                const itemText = document.createElement('span');
+                outputItem.textContent = text;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'delete-button';
+                deleteButton.textContent = '×';
+
+                deleteButton.addEventListener('click', () => {
+                    outputContainer.removeChild(outputItem);
+                    const index = keywords.indexOf(text);
+                        if (index > -1) {
+                            keywords.splice(index, 1); 
+                        }
+                });
+
+                // Combine the text and delete button into the output item
+                outputItem.appendChild(itemText);
+                outputItem.appendChild(deleteButton);
+
+                outputContainer.appendChild(outputItem);
+
+                textarea.value = '';
+                textarea.style.height = 'auto';
+
+            } else {
+                alert('Please input your key words at first, then press button.');
+            }
+        });
+
+        generatebutton.addEventListener('click', () => {
+            
+            const selectedModel = document.getElementById('modelSelect').value;
+            
+            if (keywords.length === 0) {
+                alert('Please add some keywords before generating!');
+                return;
+            }
+
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ Keyword: keywords, Model:selectedModel})
+                
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const generatedLyrics = data.lyrics;
+                console.log(generatedLyrics);
+                lyricsContent.innerHTML = ''; 
+
+                generatedLyrics.forEach(paragraph => {
+                    console.log(paragraph);
+                    const paragraphDiv = document.createElement('div');
+                    paragraphDiv.style.marginBottom = '15px';
+
+                    const paragraphElement = document.createElement('p');
+
+                    paragraphElement.textContent = paragraph;
+                    paragraphElement.style.margin = '20';
+                    paragraphDiv.appendChild(paragraphElement);
+
+                    lyricsContent.appendChild(paragraphDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+        });
+
+        clearButton.addEventListener('click', () => {
+            lyricsContent.textContent = '';
+        });
+
+        exportButton.addEventListener('click', () => {
+            const lyrics = lyricsContent.textContent.trim();  
+
+            if (lyrics) {
+                const blob = new Blob([lyrics], { type: 'text/plain' });  
+                const url = URL.createObjectURL(blob);  
+
+                const link = document.createElement('a');  
+                link.href = url;  
+                link.download = 'generated_lyrics.txt';  
+                link.click();  
+
+                URL.revokeObjectURL(url);
+            } else {
+                alert('No lyrics to export!');
+            }
+        });
+        
+        function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
 
 </body>
 </html>
