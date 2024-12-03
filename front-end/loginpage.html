@@ -1,43 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
-
 <body>
     <div class="auth-container">
         <div class="auth-forms">
             <h2>Login</h2>
-            <form action="/login" method="POST" id="login-form">
+            <form id="login-form">
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" required>
                 </div>
                 <button type="submit" class="btn-auth">Login</button>
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
             </form>
-            <p>Don't have an account? <a href="/signup">Sign Up</a></p>
         </div>
     </div>
 
-    <script>
-        document.getElementById("login-form").addEventListener("submit", function (event) {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+    <script type="module">
+        import { auth, signInWithEmailAndPassword } from './firebase-config.js';
+        import { getMultiFactorResolver } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 
-            if (!username || !password) {
-                alert("Please fill out both fields.");
-                event.preventDefault();
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                //checking if multi-factor authentication is required
+                if (user && user.multiFactor.enrolledFactors.length > 0) {
+                    const resolver = getMultiFactorResolver(auth, user);
+                    const phoneInfoOptions = { phoneNumber: '+1234567890', session: resolver.session };
+                    // send verification code (this can be tailored based on requirements)
+                    // for phone authentication
+                    // resolver.resolveSignIn({verificationId, code})
+                } else {
+                    window.location.href = 'dashboard.html';
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
             }
         });
     </script>
 </body>
-
 </html>

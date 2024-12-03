@@ -3,69 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MuseAI - Sign Up / Login</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Loading Spinner -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="spinner"></div>
-    </div>
-
     <div class="auth-container">
         <div class="auth-forms">
-            <!-- Signup Form -->
-            <div id="signupForm" class="form active">
-                <h2>Sign Up</h2>
-                <form action="/signup" method="POST" onsubmit="showLoading()">
-                    <div class="input-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="confirm-password">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" required>
-                    </div>
-                    <button type="submit" class="btn-auth">Sign Up</button>
-                    <p>Already have an account? <a href="#" onclick="toggleForms()">Login</a></p>
-                </form>
-            </div>
-
-            <!-- Login Form -->
-            <div id="loginForm" class="form">
-                <h2>Login</h2>
-                <form action="/login" method="POST" onsubmit="showLoading()">
-                    <div class="input-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn-auth">Login</button>
-                    <p>Don't have an account? <a href="#" onclick="toggleForms()">Sign Up</a></p>
-                </form>
-            </div>
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <div class="input-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" minlength="8" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="btn-auth">Sign Up</button>
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </form>
         </div>
     </div>
 
-    <script>
-        function toggleForms() {
-            document.getElementById('signupForm').classList.toggle('active');
-            document.getElementById('loginForm').classList.toggle('active');
-        }
+    <script type="module">
+        import { auth, createUserWithEmailAndPassword } from './firebase-config.js';
 
-        function showLoading() {
-            document.getElementById('loadingOverlay').style.display = 'block';
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Client-side validation
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return;
+            }
+            if (!validateEmail(email)) {
+                alert("Invalid email format.");
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                alert("Sign-up successful. Redirecting to dashboard...");
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
         }
     </script>
 </body>
