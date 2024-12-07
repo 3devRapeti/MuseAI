@@ -1,3 +1,15 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Roboto:wght@300;400&display=swap');
+
+/* General styles with updated fonts */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+header h1, .sidebar h2, .hero h1, .feature-item h2, .project-item h3, .stat-item h3 {
+    font-family: 'Poppins', sans-serif;
+}
 /* General styles */
 body {
     margin: 0;
@@ -638,5 +650,133 @@ header h1 {
 
 .stat-item h3 {
     margin: 0 0 10px;
+}
+
+
+
+/* Background Video Integration */
+body {
+    position: relative;
+    overflow: hidden;
+}
+
+video.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+}
+
+/* Pop-up Styles */
+.pop-up {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+    animation: popUpAnimation 0.5s ease-out;
+}
+
+.pop-up.active {
+    display: block;
+}
+
+@keyframes popUpAnimation {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Button to trigger Pop-ups */
+.trigger-pop-up {
+    cursor: pointer;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.trigger-pop-up:hover {
+    background-color: #0056b3;
+}
+
+/* Animation Styles */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.section-animation {
+    animation: fadeIn 1.5s ease-in;
+}
+
+/* Navbar Animation */
+.navbar {
+    animation: slideInDown 1s ease-out;
+}
+
+@keyframes slideInDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* Button Hover Effects */
+.btn-cta, .btn-auth {
+    animation: hoverPulse 1s infinite;
+}
+
+@keyframes hoverPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Spinner Animation */
+.spinner {
+    animation: spin 0.8s linear infinite;
+}
+
+/* Loading Bar Styles */
+.loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(to right, #007BFF, #00ADB5);
+    z-index: 9999;
+    transition: width 0.3s ease;
+}
+
+body.loading .loading-bar {
+    width: 100%;
+    transition: width 1s ease-in-out;
 }
 

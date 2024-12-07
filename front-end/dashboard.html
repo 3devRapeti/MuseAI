@@ -26,7 +26,7 @@
                 <li><a href="userpage.html" onclick="showLoading()">User Profile</a></li>
                 <li><a href="editprofile.html" onclick="showLoading()">Edit Profile</a></li>
                 <li><a href="settings.html" onclick="showLoading()">Settings</a></li>
-                <li><a href="logout.html" onclick="showLoading()">Logout</a></li>
+                <li><a href="loginpage.html" onclick="handleLogout()">Logout</a></li>
             </ul>
         </div>
 
@@ -58,6 +58,21 @@
     <script>
         function showLoading() {
             document.getElementById('loadingOverlay').style.display = 'block';
+        }
+        import { auth, signOut } from './firebase-config.js';
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').style.display = 'block';
+        }
+
+        async function handleLogout() {
+            showLoading(); // Show the loading spinner
+            try {
+                await signOut(auth); // Sign out the user using Firebase
+                window.location.href = 'front-end/loginpage.html'; // Redirect to the login page
+            } catch (error) {
+                alert('Error logging out: ' + error.message);
+            }
         }
     </script>
 </body>
