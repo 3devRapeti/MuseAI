@@ -34,36 +34,52 @@ def generate_lyrics(keyWords, model):
     return lyrics
 
 def lyrics(request):
-
     lyrics = ""
 
     if request.method == "POST":
         form = KeywordForm(json.loads(request.body))
 
-        if form.is_valid():
+        # buffer message to show processing
+        if not form.is_valid():
+            return JsonResponse({"lyrics": "Processing your request. Please wait..."})
 
+        if form.is_valid():
             keyword = form.cleaned_data["Keyword"]
             model = form.cleaned_data["Model"]
             print(keyword)
-            lyrics = generate_lyrics(keyword, model) 
+
+            return JsonResponse({"lyrics": "Generating lyrics. This may take a few moments..."})
+            
+            lyrics = generate_lyrics(keyword, model)
             print(lyrics)
 
-            if lyrics is None or len(lyrics)==0:
-                lyrics="In a field of dandelions, Underneath the sunny skies, Lost in a world of dreams, Where time just passes by. Millions of yellow petals, Dancing in the gentle breeze, A tranquil sight to behold, A moment of pure peace. In this sea of golden beauty, I find myself lost in thought, In a field of dandelions, My worries are all but forgot."
+            if not lyrics:
+                lyrics = (
+                    "In a field of dandelions, Underneath the sunny skies, "
+                    "Lost in a world of dreams, Where time just passes by. "
+                    "Millions of yellow petals, Dancing in the gentle breeze, "
+                    "A tranquil sight to behold, A moment of pure peace. "
+                    "In this sea of golden beauty, I find myself lost in thought, "
+                    "In a field of dandelions, My worries are all but forgot."
+                )
 
             return JsonResponse({"lyrics": lyrics})
-        
         else:
-            lyrics="In a field of dandelions, Underneath the sunny skies, Lost in a world of dreams, Where time just passes by. Millions of yellow petals, Dancing in the gentle breeze, A tranquil sight to behold, A moment of pure peace. In this sea of golden beauty, I find myself lost in thought, In a field of dandelions, My worries are all but forgot."
-            print(form.errors) 
+            lyrics = (
+                "In a field of dandelions, Underneath the sunny skies, "
+                "Lost in a world of dreams, Where time just passes by. "
+                "Millions of yellow petals, Dancing in the gentle breeze, "
+                "A tranquil sight to behold, A moment of pure peace. "
+                "In this sea of golden beauty, I find myself lost in thought, "
+                "In a field of dandelions, My worries are all but forgot."
+            )
+            print(form.errors)
     else:
         form = KeywordForm()
-
 
     context = {
         "lyrics": lyrics,
     }
-
     return render(request, 'lyrics.html', context)
 
 def generate_chords():
