@@ -1,0 +1,6 @@
+openai==0.28.0
+scikit-learn
+pickle
+transformers
+torch
+ast
