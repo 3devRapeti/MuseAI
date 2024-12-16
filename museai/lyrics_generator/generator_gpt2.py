@@ -1,9 +1,19 @@
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
 import os
+import ast
 
 def generate_lyrics_model(keywords):
 
+    keywords = ast.literal_eval(keywords)
+    prompt = ""
+
+    for keyword in keywords:
+        prompt += keyword
+        prompt += ","
+
+    keywords = prompt
+     
     current_folder = os.path.dirname(__file__)
     model_path = os.path.join(current_folder, "model.pt")
 
@@ -21,9 +31,12 @@ def generate_lyrics_model(keywords):
     lyrics = []
     for i in range(len(output)):
         lyrics.append(tokenizer.decode(output[i], skip_special_tokens=True))
-    return lyrics
+    for i in range(len(lyrics)):
+        lyrics[i] = lyrics[i].split("\n")    
+    
+    new_lyrics = []
 
-keywords = "rain, night, alone"
-lyrics = generate_lyrics_model(keywords)
-for lyric in lyrics:
-    print(lyric)
+    for i in range(len(lyrics)):
+        new_lyrics += lyrics[i]
+
+    return new_lyrics
