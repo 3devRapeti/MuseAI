@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song Genre Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Song Genre Prediction</h1>
+    <textarea id="lyrics" placeholder="Enter song lyrics here..."></textarea><br>
+    <button onclick="predictGenre()">Predict Genre</button>
+    <div id="result" class="result"></div>
+</div>
+
+<script>
+    function predictGenre() {
+        const lyrics = document.getElementById("lyrics").value;
+
+        // Check if lyrics are empty
+        if (lyrics.trim() === "") {
+            document.getElementById("result").innerHTML = "Please enter lyrics.";
+            return;
+        }
+
+        // Make POST request to the Flask API
+        fetch('http://127.0.0.1:5000/predict', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "lyrics": lyrics })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("result").innerHTML = "Error: " + data.error;
+            } else {
+                document.getElementById("result").innerHTML = "Predicted Genre: " + data.genre;
+            }
+        })
+        .catch(error => {
+            document.getElementById("result").innerHTML = "Error: " + error;
+        });
+    }
+</script>
+
+</body>
+</html>
