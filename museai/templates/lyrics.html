@@ -1,0 +1,761 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>MuseAi</title>
+        <link rel="icon" href="{% static 'images/logo2.png' %}" type="image/icon type">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/748afcfddd.js" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Fredericka+the+Great&family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bungee+Shade&family=Fredericka+the+Great&family=Sixtyfour+Convergence&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/papercss@1.9.2/dist/paper.min.css"/>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Square+Peg&display=swap" rel="stylesheet">
+        <style>
+            body{
+                background-image: url("{% static 'images/cbg1.jpg' %}");
+                background-size: 1622.8px;
+                background-position-x: right;
+                overflow: hidden;
+            }
+            @font-face{
+                font-family: heading;
+                src: url("{% static 'fonts/Quidproquo-mo0P.ttf' %}");
+            }
+            @font-face{
+                font-family: input;
+                src: url("{% static 'fonts/Southampton-MRqp.ttf' %}");
+            }
+            @font-face {
+                font-family: output;
+                src: url("{% static 'fonts/Circus\ Age\ DEMO.otf' %}");
+            }
+            @font-face {
+                font-family: output2;
+                src: url("{% static 'fonts/chopin-script/ChopinScript.ttf' %}");
+            }
+            form::after{
+                border: none;
+            }#lyrics:focus-visible{
+                outline: none;
+            }
+            #lyrics{
+                background-attachment: local;
+                background-position: -20px -11px;
+                background-image:
+                    repeating-linear-gradient(transparent, transparent 40px, #000000 40px, #000000 41px, transparent 41px);
+                line-height: 41px;
+                padding: 0px 10px;
+            }
+            .out{
+                background-attachment: local;
+                background-position: -20px -11px;
+                background-image:
+                    repeating-linear-gradient(transparent, transparent 40px, #000000 40px, #000000 41px, transparent 41px);
+                line-height: 41px;
+                padding: 0px 10px;
+            }
+            .archivo-black-regular {
+                font-family: "Archivo Black", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }          
+            .h{
+                display: none;
+                transition: 1s;
+            }    
+            .cd:hover + .h{
+                transition: 1s;
+                display: block;
+            }
+            form::after{
+                border: none;
+            }textarea:focus-visible{
+                outline: none;
+            }
+            textarea{
+                background-attachment: local;
+                background-position: -20px -11px;
+                background-image:
+                    repeating-linear-gradient(transparent, transparent 40px, #000000 40px, #000000 41px, transparent 41px);
+                line-height: 41px;
+                padding: 0px 10px;
+            }
+            .archivo-black-regular {
+                font-family: "Archivo Black", sans-serif;
+                font-weight: 400;
+                font-style: normal;
+            }          
+            .h{
+                display: none;
+                transition: 1s;
+            }    
+            .cd:hover + .h{
+                transition: 1s;
+                display: block;
+            }     
+            .mid{
+                opacity: 0;
+                border-radius: 100%;
+                height: 2920px;
+                width: 2920px;
+                z-index: 100000000;
+                background-color: rgba(152, 26, 26, 0);
+                box-shadow: 0px 0px 50px rgba(219, 76, 76, 0);
+                border-color: transparent;
+                position: absolute;
+                left: -2774px;
+                top: -1102.3px;
+                font-family: "Archivo Black", sans-serif;
+                font-size: 104.29px;
+                color: rgb(255, 255, 255);
+                text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.712);
+                transition: 0.7s;
+                rotate: 0deg;
+            }
+            .mid:hover{
+                opacity: 1;
+            }    
+            .parallelogram {
+                width: 1519px;
+                height: 1730px;
+                position: absolute;
+                top: 0vh;
+                right: -1397.48px;
+                z-index: 4;
+                background: #000000b1;
+                backdrop-filter: blur(10px);
+                box-shadow: 0px 0px 30px rgb(0, 0, 0);
+                transition: 1s !important;
+            }
+            .parallelogram:hover{
+                background: #000000e8;
+                right: -1093.68px;
+            }
+            a {
+                color: rgba(255, 251, 0, 0.6);
+            }
+            #lampadario {
+            }
+            #filo {
+                position: relative;
+                background-color: #000000;
+                width: 2px;
+                height: 450px;
+                left: 50%;
+                margin-left: -1px;
+                z-index: 1;
+                -webkit-transform-origin: 0% 0%;
+                   -moz-transform-origin: 0% 0%;
+                    -ms-transform-origin: 0% 0%;
+                     -o-transform-origin: 0% 0%;
+                        transform-origin: 0% 0%;
+                -webkit-animation: oscillaFilo .9s ease-in-out 0s infinite alternate;
+                   -moz-animation: oscillaFilo .9s ease-in-out 0s infinite alternate;
+                    -ms-animation: oscillaFilo .9s ease-in-out 0s infinite alternate;
+                     -o-animation: oscillaFilo .9s ease-in-out 0s infinite alternate;
+                        animation: oscillaFilo .9s ease-in-out 0s infinite alternate;
+            }
+            #filo:after {
+                content: " ";
+                left: -5px;
+                top: 100%;
+                position: absolute;
+                border-bottom: 15px solid #000000;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                height: 0;
+                width: 4px;
+            }
+            #lampadina {
+                position:relative;
+            }
+            input[value="off"]:checked ~
+            #filo {
+                -webkit-box-shadow: -80px -10px 7px 0 rgba(0,0,0,0.1);
+                   -moz-box-shadow: -80px -10px 7px 0 rgba(0,0,0,0.1);
+                    -ms-box-shadow: -80px -10px 7px 0 rgba(0,0,0,0.1);
+                     -o-box-shadow: -80px -10px 7px 0 rgba(0,0,0,0.1);
+                        box-shadow: -80px -10px 7px 0 rgba(0,0,0,0.1);
+            }
+            input[value="off"]:checked ~
+            #filo:after {
+                -webkit-box-shadow: -80px -10px 10px -2px rgba(0,0,0,0.1);
+                   -moz-box-shadow: -80px -10px 10px -2px rgba(0,0,0,0.1);
+                    -ms-box-shadow: -80px -10px 10px -2px rgba(0,0,0,0.1);
+                     -o-box-shadow: -80px -10px 10px -2px rgba(0,0,0,0.1);
+                        box-shadow: -80px -10px 10px -2px rgba(0,0,0,0.1);
+            }
+            
+            input.lamp {
+                position: absolute;
+                width: 90px;
+                height: 70px;
+                top: 450px;
+                margin-left:-45px;
+                opacity: 0;
+                z-index: 1;
+                cursor: pointer;
+            }
+            
+            input[value="on"] {
+                top: 450px;
+            }
+            input[value="off"] {
+                top: -300px;
+            }
+            input[value="on"]:checked {
+                top: -300px;
+            }
+            input[value="on"]:checked + input[value="off"] {
+                top: 450px;
+            }
+            
+            label {
+                width: 51px;
+                height: 51px;
+                top: 464px;
+                position: absolute;
+                left: 0;
+                margin-left: -24px;
+                -webkit-border-radius: 100%;
+                -moz-border-radius: 100%;
+                    -ms-border-radius: 100%;
+                    -o-border-radius: 100%;
+                        border-radius: 100%;
+                -webkit-animation: oscillaLampadina .9s ease-in-out 0s infinite alternate;
+                -moz-animation: oscillaLampadina .9s ease-in-out 0s infinite alternate;
+                    -ms-animation: oscillaLampadina .9s ease-in-out 0s infinite alternate;
+                    -o-animation: oscillaLampadina .9s ease-in-out 0s infinite alternate;
+                        animation: oscillaLampadina .9s ease-in-out 0s infinite alternate;
+            }           
+            input[value="off"]:checked ~
+            label {
+                background: rgba(255,255,255,0.03);
+                -webkit-box-shadow: inset 0px 1px 5px rgba(255,255,255,0.1), inset 0px 2px 20px rgba(255,255,255,0.07), -80px -15px 15px -5px rgba(0,0,0,0.1);
+                -moz-box-shadow: inset 0px 1px 5px rgba(255,255,255,0.1), inset 0px 2px 20px rgba(255,255,255,0.07), -80px -15px 15px -5px rgba(0,0,0,0.1);
+                    -ms-box-shadow: inset 0px 1px 5px rgba(255,255,255,0.1), inset 0px 2px 20px rgba(255,255,255,0.07), -80px -15px 15px -5px rgba(0,0,0,0.1);
+                    -o-box-shadow: inset 0px 1px 5px rgba(255,255,255,0.1), inset 0px 2px 20px rgba(255,255,255,0.07), -80px -15px 15px -5px rgba(0,0,0,0.1);
+                        box-shadow: inset 0px 1px 5px rgba(255,255,255,0.1), inset 0px 2px 20px rgba(255,255,255,0.07), -80px -15px 15px -5px rgba(0,0,0,0.1);
+            }
+            input[value="on"]:checked ~
+            label {
+                background: rgb(198, 194, 2);
+                -webkit-box-shadow: 0px 0px 10px rgba(198,194,2,0.8), 0px 0px 30px rgba(198,194,2,0.8), 0px 0px 50px rgba(198,194,2,0.6), 0px 0px 70px rgba(198,194,2,0.6), -80px -15px 120px 0px rgba(198,194,2,0.4);
+                -moz-box-shadow: 0px 0px 10px rgba(198,194,2,0.8), 0px 0px 30px rgba(198,194,2,0.8), 0px 0px 50px rgba(198,194,2,0.6), 0px 0px 70px rgba(198,194,2,0.6), -80px -15px 120px 0px rgba(198,194,2,0.4);
+                    -ms-box-shadow: 0px 0px 10px rgba(198,194,2,0.8), 0px 0px 30px rgba(198,194,2,0.8), 0px 0px 50px rgba(198,194,2,0.6), 0px 0px 70px rgba(198,194,2,0.6), -80px -15px 120px 0px rgba(198,194,2,0.4);
+                    -o-box-shadow: 0px 0px 10px rgba(198,194,2,0.8), 0px 0px 30px rgba(198,194,2,0.8), 0px 0px 50px rgba(198,194,2,0.6), 0px 0px 70px rgba(198,194,2,0.6), -80px -15px 120px 0px rgba(198,194,2,0.4);
+                        box-shadow: 0px 0px 10px rgba(198,194,2,0.8), 0px 0px 30px rgba(198,194,2,0.8), 0px 0px 50px rgba(198,194,2,0.6), 0px 0px 70px rgba(198,194,2,0.6), -80px -15px 120px 0px rgba(198,194,2,0.4);
+            }
+    
+            input[value="off"]:checked ~
+            label:after {
+                content: " ";
+                width: 15px;
+                height: 15px;
+                top: 0;
+                position: absolute;
+                left: 0;
+                margin-left: 15px;
+                -webkit-border-radius: 100%;
+                -moz-border-radius: 100%;
+                    -ms-border-radius: 100%;
+                    -o-border-radius: 100%;
+                        border-radius: 100%;
+                border: 2px solid rgba(255,255,255,0.03);
+            }
+            #sorpresa {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+            input[value="off"]:checked ~
+            #lampadina #sorpresa {
+                opacity: 0;
+            }
+            input[value="on"]:checked ~
+            #lampadina #sorpresa {
+                opacity: 1;
+            }
+            #footer {
+                position: fixed;
+                width: 94%;
+                text-align: center;
+                bottom: 30%;
+                padding: 0 3%;
+                z-index:1;
+            }
+            #shadow {
+                position: fixed;
+                width: 94%;
+                text-align: center;
+                bottom: 29%;
+                padding: 0 3%;
+                color:rgba(0,0,0,0);
+                -webkit-text-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -moz-text-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -ms-text-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -o-text-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                        text-shadow: 0px 0px 4px rgba(0,0,0,0.3);
+                -webkit-transform-origin: 50% 0px;
+                -moz-transform-origin: 50% 0px;
+                -ms-transform-origin: 50% 0px;
+                -o-transform-origin: 50% 0px;
+                        transform-origin: 50% 0px;
+                -webkit-animation: ombraTesto .9s ease-in-out 0s infinite alternate;
+                -moz-animation: ombraTesto .9s ease-in-out 0s infinite alternate;
+                    -ms-animation: ombraTesto .9s ease-in-out 0s infinite alternate;
+                    -o-animation: ombraTesto .9s ease-in-out 0s infinite alternate;
+                        animation: ombraTesto .9s ease-in-out 0s infinite alternate;
+            }
+            @-webkit-keyframes oscillaFilo {
+                from {
+                    -webkit-transform:rotate(15deg);
+                } to {
+                    -webkit-transform:rotate(-15deg);
+                }
+            }
+            @-moz-keyframes oscillaFilo {
+                from {
+                    -moz-transform:rotate(15deg);
+                } to {
+                    -moz-transform:rotate(-15deg);
+                }
+            }
+            @-ms-keyframes oscillaFilo {
+                from {
+                    -ms-transform:rotate(15deg);
+                } to {
+                    -ms-transform:rotate(-15deg);
+                }
+            }
+            @-o-keyframes oscillaFilo {
+                from {
+                    -o-transform:rotate(15deg);
+                } to {
+                    -o-transform:rotate(-15deg);
+                }
+            }
+            @keyframes oscillaFilo {
+                from {
+                    transform:rotate(15deg);
+                } to {
+                    transform:rotate(-15deg);
+                }
+            }
+            
+            @-webkit-keyframes oscillaLampadina {
+                from {
+                    -webkit-transform: rotate(8deg) translate(-127.518px,-0px);
+                } to {
+                    -webkit-transform: rotate(-8deg) translate(127.518px,-0px);
+                }
+            }
+            @-moz-keyframes oscillaLampadina {
+                from {
+                    -moz-transform: rotate(8deg) translate(-127.518px,-0px);
+                } to {
+                    -moz-transform: rotate(-8deg) translate(127.518px,-0px);
+                }
+            }
+            @-ms-keyframes oscillaLampadina {
+                from {
+                    -ms-transform: rotate(8deg) translate(-127.518px,-0px);
+                } to {
+                    -ms-transform: rotate(-8deg) translate(127.518px,-0px);
+                }
+            }
+            @-o-keyframes oscillaLampadina {
+                from {
+                    -o-transform: rotate(8deg) translate(-127.518px,-0px);
+                } to {
+                    -o-transform: rotate(-8deg) translate(127.518px,-0px);
+                }
+            }
+            @keyframes oscillaLampadina {
+                from {
+                    transform: rotate(8deg) translate(-127.518px,-0px);
+                } to {
+                    transform: rotate(-8deg) translate(127.518px,-0px);
+                }
+            }
+            
+            @-webkit-keyframes ombraTesto {
+                from {
+                    -webkit-transform: translate(1px,0px) scale(1.01,1.06) skew(0.8deg, 0deg);
+                } to {
+                    -webkit-transform: translate(-1px,0px) scale(1.01,1.06) skew(-0.8deg, 0deg);
+                }
+            }
+            @-moz-keyframes ombraTesto {
+                from {
+                    -moz-transform: translate(1px,0px) scale(1.01,1.06) skew(0.8deg, 0deg);
+                } to {
+                    -moz-transform: translate(-1px,0px) scale(1.01,1.06) skew(-0.8deg, 0deg);
+                }
+            }
+            @-ms-keyframes ombraTesto {
+                from {
+                    -ms-transform: translate(1px,0px) scale(1.01,1.06) skew(0.8deg, 0deg);
+                } to {
+                    -ms-transform: translate(-1px,0px) scale(1.01,1.06) skew(-0.8deg, 0deg);
+                }
+            }
+            @-o-keyframes ombraTesto {
+                from {
+                    -o-transform: translate(1px,0px) scale(1.01,1.06) skew(0.8deg, 0deg);
+                } to {
+                    -o-transform: translate(-1px,0px) scale(1.01,1.06) skew(-0.8deg, 0deg);
+                }
+            }
+            @keyframes ombraTesto {
+                from {
+                    transform: translate(1px,0px) scale(1.01,1.06) skew(0.8deg, 0deg);
+                } to {
+                    transform: translate(-1px,0px) scale(1.01,1.06) skew(-0.8deg, 0deg);
+                }
+            }
+            .square-peg-regular {
+                font-family: "Square Peg", cursive;
+                font-weight: 400;
+                font-style: normal;
+            }
+            .delete-button{
+                background-color: rgba(0, 0, 0, 0);
+                border: none;
+                padding: 0px;
+                padding-left: 10px;
+            }
+            .output-item{
+                width:fit-content;
+                display: inline-block;
+                padding-left: 20px;
+                height: 45px;
+            }
+            .pdiv{
+                font-family: 'Square Peg', cursive;
+                font-size: 30px;
+                letter-spacing: 1px;
+                line-height: 40px;
+                padding: 0px;
+                margin: 0px;
+                align-content: center;
+                border:none;
+                border-bottom-width: 1px;
+                border-bottom-color: black;
+            }
+            .pelem{
+                font-family: 'Square Peg', cursive;
+                font-size: 30px;
+                letter-spacing: 1px;
+                line-height: 40px;
+                padding:0px;
+                margin: 0px;
+                align-content: center;
+                border:none;
+                border-bottom-width: 1px;
+                border-bottom-color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- <img src="{% static 'images/logo.png' %}" style="position: absolute; top: -20px; left: 1030px; width: 200px; border-color: transparent;">
+        <p class="out" style="position: absolute; left: 726px; top: 200px; color: rgba(0, 2, 44, 0.851); font-family: heading; font-family: input; font-size: 40px; font-weight: bolder; border: 1px; width: 800px;">{{ lyrics }}</p>
+        <h1 style="font-family: heading; font-size: 100px; color: rgba(0, 2, 44, 0.851); position: absolute; top: 30px; left: 190px; text-align: center; align-content: center; ">Lyrics Generation<br>Page</h1>
+        <h1 style="font-family: heading; font-size: 50px; color: rgba(0, 2, 44, 0.851); position: absolute; top: 340px; left: 190px;">Write down keyword to generate lyrics</h1>
+        <form action="{% url 'lyrics' %}" style="position: absolute; top: 450px; left: 170px;" method="post">
+            {% csrf_token %}
+            <input id="lyrics" name="keywords" type="text" style="width: 430px; text-align: center; align-content: center; margin-left: 60px; border:none; background-color: transparent; font-family: input; font-size: 40px; color: rgba(0, 2, 44, 0.851); font-weight: bolder; " autofocus/>
+            <input type="radio" name="model" id="basic" style="width: 430px; text-align: center; align-content: center; margin-left: 60px; border:none; background-color: transparent; font-family: input; font-size: 40px; color: rgba(0, 2, 44, 0.851); font-weight: bolder; " value="basic"/>
+            <label for="basic">Basic</label>
+            <input type="radio" name="model" id="premium" style="width: 430px; text-align: center; align-content: center; margin-left: 60px; border:none; background-color: transparent; font-family: input; font-size: 40px; color: rgba(0, 2, 44, 0.851); font-weight: bolder; " value="premium"/>
+            <label for="premium">Premium</label>
+            <br> 
+            <input type="submit" class="paper-btn btn-primary-outline" value="Generate" style="font-size: 40px; font-family: input; font-weight: bolder; background-color: transparent; color: rgba(0, 2, 44, 0.851); border-color: rgba(0, 2, 44, 0.851); margin-left: 220px;"/>
+        </form>
+        <img src="{% static 'images/bind.png' %}" style="height: 100vh; width: auto; position:absolute; top: 0vh; left: 1319px; border:none;"> -->
+        <img src="{% static 'images/bg4.png' %}" id="bg1" style="transform: translate(-949px) rotate(-95deg); max-width:max-content ; border:none; transition: 1s; width: 2930px !important; position:absolute; top: -1102.3px !important; left: -1759.7px !important; height: 2930px; z-index: 100000;">
+        <button id="mid" class="mid" onclick="rotd()">
+            <p class="m" style="font-family: 'Archivo Black', sans-serif; position: absolute; left: 2777.65px; top: 1269.11px; z-index: 1000000; rotate: -5.5deg;">H</p>
+            <p class="m" style="font-family: 'Archivo Black', sans-serif;position: absolute; left: 2788.95px; top: 1367.85px; z-index: 1000000; rotate: 0deg;">O</p>
+            <p class="m" style="font-family: 'Archivo Black', sans-serif;position: absolute; left: 2788.95px; top: 1466.4px; z-index: 1000000; rotate: 2deg; font-size:83.95px;">M</p>
+            <p class="m" style="font-family: 'Archivo Black', sans-serif;position: absolute; left: 2781.65px; top: 1548.16px; z-index: 1000000; rotate: 7.5deg;">E</p>
+        </button>
+        <h1 style="font-family: heading; position: absolute; top: 100px; right: 900px;">Lyrics Generator</h1>
+        <div class="dynamic-container">
+            <h2 style="position:absolute; top: 230px; right: 920px; font-size: 45px; font-family: heading;">Input your Key Words here</h2>
+            <input id="box" style="position:absolute; top: 290px; right: 990px; font-size: 45px; font-family: input; background-color: transparent; border-color: transparent; border-bottom-color: black; width: 280px; color: rgb(0, 9, 37);" class="dynamic-textarea" placeholder="Input your key words here...">
+            <button style="position:absolute; top: 300px; right: 920px; font-size: 45px; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; height: 50px; width: 50px; background-color: rgba(0, 0, 0, 0.329); padding: 0px; color: black; border: none;" class="add-button">+</button>
+        </div>
+
+        <div class="output-container" id="outputContainer" style="display: inline-block; width: 300px; position: absolute; top: 380px; right: 950px; font-family: input; font-size: 45px; color: black; border: none; background-color: rgba(255, 255, 255, 0); ">
+            <!-- Updated keywords will be added here -->
+        </div>
+        <select id="modelSelect" style="position:absolute; top: 390px; right: 1030px; font-size: 35px; border-color: black; color: black; font-family: 'Square Peg', cursive; padding:0px; cursor: pointer;">
+            <option value="basic" style="padding: 0px; background-color: transparent; font-size: 35px; border-color: black; color: black; font-family: 'Square Peg', cursive; width: 50px; cursor: pointer;">Normal</option>
+            <option value="premium" style="padding: 0px; background-color: transparent; font-size: 35px; border-color: black; color: black; font-family: 'Square Peg', cursive; width: 50px; cursor: pointer;">Upgraded</option>
+        </select>
+
+        <button id="generateButton" class="generate-button" style="background-color: transparent; color: black; border-color: black; padding: 2px; position: absolute; top: 470px; right: 1150px; font-family: 'Square Peg', cursive; font-size: 35px; border-style:double; font-weight:bold ; border-width: 5px; ">Generate</button>
+        <button id="clearButton" class="generate-button" style="background-color: transparent; color: black; border-color: black; padding: 2px; position: absolute; top: 470px; right: 1050px; font-family: 'Square Peg', cursive; font-size: 35px; border-style:double; font-weight:bold ; border-width: 5px; ">Clear</button>
+        <button id="exportButton" class="generate-button" style="background-color: transparent; color: black; border-color: black; padding: 2px; position: absolute; top: 470px; right: 945px; font-family: 'Square Peg', cursive; font-size: 35px; border-style:double; font-weight:bold ; border-width: 5px; ">Export</button>
+
+        <div id="lyricsContent" style="overflow-y:visible; overflow-x:hidden; font-family: 'Square Peg', cursive; font-size: 30px; position:absolute; top: 50px; right: 50px; width: 700px; height: 635px; letter-spacing: 1px; line-height: 40px;"> {{ lyrics }} </div> 
+
+        <script>
+            const textarea = document.querySelector('.dynamic-textarea');
+            const addbutton = document.querySelector('.add-button');
+
+            const outputContainer = document.getElementById('outputContainer');
+            const drop = document.getElementById('modelSelect');
+            const generatebutton = document.querySelector('.generate-button');
+            const clearbutton = document.getElementById('clearButton');
+            const exportButton = document.getElementById('exportButton');
+            const lyricsContent = document.getElementById('lyricsContent');
+            
+            const keywords = [];
+            var x=0;
+            document.getElementById("box").addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode === 13) {
+                    addbutton.click();
+                }
+            });
+
+            function containsNonLetters(str) {
+                return !/^[a-zA-Z]+$/.test(str);
+            }
+
+            textarea.addEventListener('input', () => {
+                textarea.style.height = 'auto'; 
+                textarea.style.height = `${textarea.scrollHeight}px`; 
+            });
+
+            addbutton.addEventListener('click', () => {
+                const text = textarea.value.trim();
+                if (text) {
+                    if(containsNonLetters(text)) {
+                        alert("Keyword should not contain special characters");
+                    } else {
+                        keywords.push(text);
+
+                        const outputItem = document.createElement('div');
+                        outputItem.className = 'output-item';
+
+                        const itemText = document.createElement('span');
+                        outputItem.textContent = text;
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.className = 'delete-button';
+                        deleteButton.textContent = '×';
+
+                        deleteButton.addEventListener('click', () => {
+                            outputContainer.removeChild(outputItem);
+                            if(keywords.length==5) addbutton.style.display="block";
+                            if (outputContainer.offsetHeight!=x) {
+                                var y1=drop.style.top;
+                                var y2=generatebutton.style.top;
+                                var y3=clearbutton.style.top;
+                                var y4=exportButton.style.top;
+                                var z1=Number(y1.substring(0,y1.length-2));
+                                var z2=Number(y2.substring(0,y2.length-2));
+                                var z3=Number(y3.substring(0,y3.length-2));
+                                var z4=Number(y4.substring(0,y4.length-2));
+                                z1+=(outputContainer.offsetHeight-x);
+                                z2+=(outputContainer.offsetHeight-x);
+                                z3+=(outputContainer.offsetHeight-x);
+                                z4+=(outputContainer.offsetHeight-x);
+                                y1=z1.toString();
+                                y2=z2.toString();
+                                y3=z3.toString();
+                                y4=z4.toString();
+                                y1=y1+"px";
+                                y2=y2+"px";
+                                y3=y3+"px";
+                                y4=y4+"px";
+                                drop.style.top=y1;
+                                generatebutton.style.top=y2;
+                                clearbutton.style.top=y3;
+                                exportButton.style.top=y4;
+                                x=outputContainer.offsetHeight;
+                            }
+                            const index = keywords.indexOf(text);
+                                if (index > -1) {
+                                    keywords.splice(index, 1); 
+                                }
+                        });
+
+                        // Combine the text and delete button into the output item
+                        outputItem.appendChild(itemText);
+                        outputItem.appendChild(deleteButton);
+
+                        outputContainer.appendChild(outputItem);
+                        if (outputContainer.offsetHeight!=x) {
+                            var y1=drop.style.top;
+                            var y2=generatebutton.style.top;
+                            var y3=clearbutton.style.top;
+                            var y4=exportButton.style.top;
+                            var z1=Number(y1.substring(0,y1.length-2));
+                            var z2=Number(y2.substring(0,y2.length-2));
+                            var z3=Number(y3.substring(0,y3.length-2));
+                            var z4=Number(y4.substring(0,y4.length-2));
+                            z1+=(outputContainer.offsetHeight-x);
+                            z2+=(outputContainer.offsetHeight-x);
+                            z3+=(outputContainer.offsetHeight-x);
+                            z4+=(outputContainer.offsetHeight-x);
+                            y1=z1.toString();
+                            y2=z2.toString();
+                            y3=z3.toString();
+                            y4=z4.toString();
+                            y1=y1+"px";
+                            y2=y2+"px";
+                            y3=y3+"px";
+                            y4=y4+"px";
+                            drop.style.top=y1;
+                            generatebutton.style.top=y2;
+                            clearbutton.style.top=y3;
+                            exportButton.style.top=y4;
+                            x=outputContainer.offsetHeight;
+                        }
+
+                        if(keywords.length==5) addbutton.style.display="none";
+
+                        textarea.value = '';
+                        textarea.style.height = 'auto';
+                    }
+
+                } else {
+                    alert('Please input your key words at first, then press button.');
+                }
+            });
+
+            generatebutton.addEventListener('click', () => {
+                
+                const selectedModel = document.getElementById('modelSelect').value;
+                
+                if (keywords.length === 0) {
+                    alert('Please add some keywords before generating!');
+                    return;
+                }
+
+                fetch('{% url "lyrics" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ Keyword: keywords, Model:selectedModel})
+                    
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const generatedLyrics = data.lyrics;
+                    lyricsContent.innerHTML = ''; 
+
+                    generatedLyrics.forEach(paragraph => {
+                        const paragraphDiv = document.createElement('div');
+                        paragraphDiv.className='pdiv';
+                        const paragraphElement = document.createElement('p');
+                        paragraphElement.className='pelem';
+                        paragraphElement.textContent = paragraph;
+                        paragraphDiv.appendChild(paragraphElement);
+
+                        lyricsContent.appendChild(paragraphDiv);
+                    });
+                })
+                .catch(error => {
+                    console.log(error);
+                    console.error('Fetch error:', error);
+                });
+            });
+
+            clearButton.addEventListener('click', () => {
+                lyricsContent.textContent = '';
+            });
+
+            exportButton.addEventListener('click', () => {
+                const lyrics = lyricsContent.textContent.trim();  
+
+                if (lyrics) {
+                    const blob = new Blob([lyrics], { type: 'text/plain' });  
+                    const url = URL.createObjectURL(blob);  
+
+                    const link = document.createElement('a');  
+                    link.href = url;  
+                    link.download = 'generated_lyrics.txt';  
+                    link.click();  
+
+                    URL.revokeObjectURL(url);
+                } else {
+                    alert('No lyrics to export!');
+                }
+            });
+            
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        </script>
+        <img src="{% static 'images/bind.png' %}" style="height: 100vh; width: auto; position:absolute; top: 0vh; left: 1319px; border:none;">
+        <script>
+            function rotd() {
+                var img=document.getElementById("bg1");
+                var mid=document.getElementById("mid");
+                var lamp=document.getElementById("lampadario");
+                var pgm=document.getElementById("pgm");
+                var st=document.getElementById("st");
+                img.style.transform='translate(0vh) rotate(0deg)';
+                lamp.style.transform='translate(0vh)';
+                pgm.style.transform='translate(0vw)';
+                mid.style.display='none';
+                pgm.style.transform='translate(0px)';
+                lamp.style.transform='translate(0px)';
+                st.style.transform='translate(0px) rotate(-415deg)';
+                setTimeout(function(){
+                    window.location.href = "http://127.0.0.1:8000/";
+                },1000);
+            }
+        </script>
+        <img id="st" class="id" src="{% static 'images/img3.png' %}" style="border:none; transform:translate(-7300px) rotate(180deg); transition:1s; position: absolute; top: -189.93px; height:110vh; left: 817.6px; z-index: 2; z-index: 200000000;">
+        <div id="pgm" class="parallelogram" style="transform:translate(155.7px)">
+            <img src="{% static 'images/logo.png' %}" style="border:none;position: absolute; top: 511px; left: -30.38px; z-index: 6; height: 182.5px;">
+            <h1 style="position: absolute; top: 598.6px; left: 141.267px; font-size: 51.1px; font-family: 'Bungee Shade', sans-serif; color: white;">MUSEAI</h1>
+            <h1 style="position: absolute; top: 160.6px; left: -30.38px; font-size: 51.1px; rotate:-90deg; color: rgba(255, 255, 255, 0.897);">Our Band</h1>
+            <h1 style="position: absolute; top: 160.6px; left: 243.04px; font-size: 51.1px; rotate: 90deg; color: white;">Group 6</h1>
+            <p style="position: absolute; top: 80.3px; left: 151.9px; font-size: 36.5px; color: white;">Tridev<br>Shreni<br>Aayush<br>Lingjie</p>
+        </div>
+        <div id="lampadario" style="border:none;transition: 0.7s; position:absolute; top:0vh; right:160px;transform:translate(400px)">
+            <input class="lamp" type="radio" name="switch" value="on" checked="checked"/>
+            <input class="lamp" type="radio" name="switch" value="off"/>
+            <label for="switch"></label>
+            <div id="filo"></div>
+        </div>
+    </body>
+</html>
